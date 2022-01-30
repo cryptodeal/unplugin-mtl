@@ -67,8 +67,7 @@
     "*.d.ts"
   ],
   "scripts": {
-    "deploy": "pnpm recursive run build",
-    "build": "tsup",
+    "build": "tsup && pnpm recursive run build",
     "dev": "tsup --watch src",
     "build:fix": "esno scripts/postbuild.ts",
     "lint": "eslint \"{src,test}/**/*.ts\"",

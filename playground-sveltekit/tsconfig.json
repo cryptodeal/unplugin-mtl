@@ -25,7 +25,6 @@
 		"paths": {
 			"$lib": ["src/lib"],
 			"$lib/*": ["src/lib/*"],
-			"unplugin-mtl": ["../src"]
 		},
 		"types": ["unplugin-mtl/mtl", "unplugin-obj/obj"]
 	},

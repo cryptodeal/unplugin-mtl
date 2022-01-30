@@ -13,9 +13,10 @@
 	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.1",
-		"@sveltejs/adapter-auto": "next",
+		"@sveltejs/adapter-vercel": "next",
 		"@sveltejs/kit": "next",
 		"@types/three": "^0.135.0",
+		"dotenv": "^14.3.2",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.6.0",
 		"svelte": "^3.46.3",

@@ -2,35 +2,30 @@
 	import { page } from '$app/stores';
 </script>
 
-
 <header>
 	<nav>
-
 		<ul>
 			<li class:active={$page.url.pathname === '/'}><a sveltekit:prefetch href="/">Demo 1</a></li>
 			<li class:active={$page.url.pathname === '/demo2'}>
 				<a sveltekit:prefetch href="/demo2">Demo 2</a>
 			</li>
 		</ul>
-
 	</nav>
 </header>
 
-
 <style>
-
 	nav {
 		display: flex;
 		justify-content: center;
 		--background: rgba(255, 255, 255, 0.7);
-    height: 5vh;
-    max-height: 5vh;
-    overflow: hidden;
+		height: 5vh;
+		max-height: 5vh;
+		overflow: hidden;
 	}
 
-  header {
-    background-color: rgb(111, 119, 167);
-  }
+	header {
+		background-color: rgb(111, 119, 167);
+	}
 	ul {
 		position: relative;
 		padding: 0;

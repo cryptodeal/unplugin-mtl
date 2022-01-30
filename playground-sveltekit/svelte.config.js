@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-auto';
+import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
 import MtlFileImport from 'unplugin-mtl/vite';
 import ObjFileImport from 'unplugin-obj/vite';
@@ -18,6 +18,9 @@ const config = {
 		target: '#svelte',
 		vite: {
 			plugins: [MtlFileImport(), ObjFileImport()],
+			ssr: {
+				noExternal: ['three']
+			},
 			resolve: {}
 		}
 	}

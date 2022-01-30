@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
-import MtlFileImport from 'unplugin-mtl/vite';
+import MtlFileImport from '../dist/vite';
 import ObjFileImport from 'unplugin-obj/vite';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -30,7 +30,7 @@ const config = {
 if (process.env.SERVER_ENV === 'Vercel') {
 	config.kit.vite.resolve = {
 		alias: {
-			'unplugin-mtl': path.resolve('../src')
+			'unplugin-mtl': path.resolve('../')
 		}
 	};
 }

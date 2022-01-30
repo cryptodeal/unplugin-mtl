@@ -17,10 +17,7 @@ const config = {
 		vite: {
 			plugins: [MtlFileImport(), ObjFileImport()],
 			ssr: {
-				noExternal: ['three', 'unplugin-mtl']
-			},
-			resolve: {
-				preserveSymlinks: true
+				noExternal: ['three']
 			}
 		}
 	}

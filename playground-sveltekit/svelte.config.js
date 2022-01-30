@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
-import MtlFileImport from '../dist/vite';
+import MtlFileImport from '../dist/vite.mjs';
 import ObjFileImport from 'unplugin-obj/vite';
 import path from 'path';
 import dotenv from 'dotenv';

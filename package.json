@@ -67,6 +67,7 @@
     "*.d.ts"
   ],
   "scripts": {
+    "deploy": "tsup && pnpm recursive run build",
     "build": "tsup",
     "dev": "tsup --watch src",
     "build:fix": "esno scripts/postbuild.ts",

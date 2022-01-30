@@ -1,6 +1,6 @@
 import adapter from '@sveltejs/adapter-vercel';
 import preprocess from 'svelte-preprocess';
-import MtlFileImport from 'unplugin-mtl';
+import MtlFileImport from 'unplugin-mtl/vite';
 import ObjFileImport from 'unplugin-obj/vite';
 
 /** @type {import('@sveltejs/kit').Config} */

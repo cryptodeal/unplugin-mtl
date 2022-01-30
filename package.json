@@ -1,0 +1,103 @@
+{
+  "name": "unplugin-mtl",
+  "version": "0.0.1",
+  "description": "Import .mtl files as strings 🧵 in Vite, Rollup, Webpack + more",
+  "keywords": [
+    "unplugin",
+    "vite",
+    "webpack",
+    "rollup",
+    "transform",
+    "three.js",
+    "svelte-cubed",
+    "mtl",
+    "mtl-loader",
+    "mtl-file"
+  ],
+  "homepage": "https://github.com/cryptodeal/unplugin-mtl#readme",
+  "bugs": {
+    "url": "https://github.com/cryptodeal/unplugin-mtl/issues"
+  },
+  "author": {
+    "name": "James Deal",
+    "email": "james.deal@balleranalytics.ai",
+    "url": "https://github.com/cryptodeal"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cryptodeal/unplugin-mtl.git"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    },
+    "./vite": {
+      "require": "./dist/vite.js",
+      "import": "./dist/vite.mjs"
+    },
+    "./webpack": {
+      "require": "./dist/webpack.js",
+      "import": "./dist/webpack.mjs"
+    },
+    "./rollup": {
+      "require": "./dist/rollup.js",
+      "import": "./dist/rollup.mjs"
+    },
+    "./nuxt": {
+      "require": "./dist/nuxt.js",
+      "import": "./dist/nuxt.mjs"
+    },
+    "./types": {
+      "require": "./dist/types.js",
+      "import": "./dist/types.mjs"
+    },
+    "./*": "./*",
+    "./mtl": {
+      "types": "./mtl.d.ts"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "index.d.ts",
+  "files": [
+    "dist",
+    "types",
+    "*.d.ts"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch src",
+    "build:fix": "esno scripts/postbuild.ts",
+    "lint": "eslint \"{src,test}/**/*.ts\"",
+    "lint:fix": "npm run lint -- --fix",
+    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "play": "npm -C playground run dev",
+    "prepublishOnly": "npm run build",
+    "release": "bumpp --commit --push --tag && pnpm publish",
+    "start": "esno src/index.ts"
+  },
+  "dependencies": {
+    "unplugin": "^0.2.7"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.10",
+    "@typescript-eslint/eslint-plugin": "^5.5.0",
+    "@typescript-eslint/parser": "^5.5.0",
+    "bumpp": "^6.0.6",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "esno": "^0.9.1",
+    "fast-glob": "^3.2.7",
+    "nodemon": "^2.0.12",
+    "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.56.3",
+    "tsup": "^4.14.0",
+    "typescript": "^4.5",
+    "vite": "^2.5.3",
+    "webpack": "^5.51.2"
+  }
+}

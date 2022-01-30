@@ -3,10 +3,10 @@
 	import * as SC from 'svelte-cubed';
 	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
   import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-	import treeMat from '$lib/models/Lowpoly_tree_sample.mtl';
-  import treeObj from '$lib/models/Lowpoly_tree_sample.obj';
+	import treeMat from '../../static/models/demo2/Car.mtl';
+  import treeObj from '../../static/models/demo2/Car.obj';
   const loadMtl = async ()  => {
-    const material =  new MTLLoader().parse(treeMat, 'models/demo1/')
+    const material =  new MTLLoader().parse(treeMat, 'models/demo2/')
     material.preload()
     return material
   } 

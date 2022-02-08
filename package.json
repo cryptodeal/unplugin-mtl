@@ -70,21 +70,27 @@
     "build": "tsup && pnpm recursive run build",
     "dev": "tsup --watch src",
     "build:fix": "esno scripts/postbuild.ts",
-    "lint": "eslint \"{src,test}/**/*.ts\"",
+    "recursive:lint": "eslint \"{src,test}/**/*.ts\"",
+    "lint": "pnpm recursive run recursive:lint",
     "lint:fix": "npm run lint -- --fix",
-    "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "recursive:format": "prettier --config .prettierrc 'src/**/*.ts' --write",
+    "preview": "pnpm recursive run preview",
+    "format": "pnpm recursive run recursive:format",
     "play": "npm -C playground run dev",
     "prepublishOnly": "npm run build",
     "release": "bumpp --commit --push --tag",
     "start": "esno src/index.ts"
   },
   "dependencies": {
+    "@rollup/pluginutils": "^4.1.2",
+    "sharp": "^0.30.0",
     "unplugin": "^0.2.21"
   },
   "devDependencies": {
-    "@types/node": "^16.11.21",
-    "@typescript-eslint/eslint-plugin": "^5.10.1",
-    "@typescript-eslint/parser": "^5.10.1",
+    "@types/node": "^16.11.22",
+    "@types/sharp": "^0.29.5",
+    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/parser": "^5.10.2",
     "bumpp": "^6.1.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
@@ -94,10 +100,10 @@
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.66.1",
+    "rollup": "^2.67.0",
     "tsup": "^4.14.0",
     "typescript": "^4.5.5",
     "vite": "^2.7.13",
-    "webpack": "^5.67.0"
+    "webpack": "^5.68.0"
   }
 }

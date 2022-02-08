@@ -1,15 +1,18 @@
 <script lang="ts">
 	import * as THREE from 'three';
 	import * as SC from 'svelte-cubed';
-	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
-	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-	import treeMat from '../../static/models/demo2/Car.mtl';
-	import treeObj from '../../static/models/demo2/Car.obj';
-	const loadMtl = async () => {
-		const material = new MTLLoader().parse(treeMat, 'models/demo2/');
-		material.preload();
-		return material;
-	};
+	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
+	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
+	import { mtl, extRef } from '$lib/models/demo1/Lowpoly_tree_sample.mtl';
+	import obj from '$lib/models/demo1/Lowpoly_tree_sample.obj';
+	import { onMount } from 'svelte';
+	let object;
+	$: console.log(`.mtl file helper, uses external resources: ${extRef}`);
+	onMount(() => {
+		const materials = new MTLLoader().parse(mtl, '');
+		materials.preload();
+		object = new OBJLoader().setMaterials(materials).parse(obj);
+	});
 	let clock = new THREE.Clock(),
 		time = 0,
 		delta = 0,
@@ -22,10 +25,12 @@
 		time += delta;
 		ballYRotation = time * 1.5;
 	});
+	$: if (object?.children[0] instanceof THREE.Mesh) console.log(object.children[0].material);
+	$: if (object?.children[0] instanceof THREE.Mesh) console.log(object.children[0].geometry);
 </script>
 
 <div class="basicContainer" bind:clientHeight={height} bind:clientWidth={width}>
-	{#await loadMtl()}
+	{#if !object}
 		<div class="loadingContainer">
 			<div class="wave" />
 			<div class="wave" />
@@ -38,13 +43,16 @@
 			<div class="wave" />
 			<div class="wave" />
 		</div>
-	{:then loadedMaterial}
+	{:else}
 		<SC.Canvas antialias background={new THREE.Color('papayawhip')} shadows {width} {height}>
-			<SC.Primitive
-				position={[0, 0, 0]}
-				object={new OBJLoader().setMaterials(loadedMaterial).parse(treeObj)}
-				rotation={[0, ballYRotation, 0]}
-			/>
+			{#if object.children[0] instanceof THREE.Mesh}
+				<SC.Mesh
+					position={[0, 0, 0]}
+					geometry={object.children[0].geometry}
+					material={object.children[0].material}
+					rotation={[0, ballYRotation, 0]}
+				/>
+			{/if}
 			<SC.PerspectiveCamera position={[50, 50, 50]} />
 			<SC.OrbitControls enableZoom={true} maxPolarAngle={Math.PI * 0.51} />
 			<SC.AmbientLight intensity={0.6} />
@@ -54,5 +62,5 @@
 				shadow={{ mapSize: [2048, 2048] }}
 			/>
 		</SC.Canvas>
-	{/await}
+	{/if}
 </div>

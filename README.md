@@ -11,9 +11,11 @@ Credit to the inspiration from: [unplugin-obj](https://github.com/tonyketcham/un
 Here's a simple example which imports an `.mtl` file as a string then logs it to the console.
 
 ```ts
-import mtl from './models/Lowpoly_tree_sample.mtl';
+import { mtl, extRef, extRefHelpers } from './models/Lowpoly_tree_sample.mtl';
 
-console.log(mtl);
+console.log(mtl); // string of .mtl file contents w external files replaced with vite imported URL
+console.log(extRef) // boolean: true if .mtl references external files
+console.log(extRefHelpers) // array of objects: [{ src, width, height }]
 
 // ...optionally parse the mtl file and create a mesh from it...
 ```

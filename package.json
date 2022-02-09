@@ -1,6 +1,6 @@
 {
   "name": "unplugin-mtl",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Import .mtl files as strings 🧵 in Vite, Rollup, Webpack + more",
   "keywords": [
     "unplugin",

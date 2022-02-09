@@ -1,8 +1,10 @@
 import { createUnplugin } from 'unplugin';
-// import { loadImage } from './utils';
-// import { parseURL } from './utils/parseImport';
+import { loadImage } from './utils';
+import { parseURL } from './utils/parseImport';
+import path from 'path';
 
-const resourceRegex = / (.*\.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga))/g;
+const resourceRegex =
+  / (.*\.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga|webp|avif|tiff))/g;
 const mtlRegex = /\.mtl\??/;
 
 /**
@@ -16,19 +18,22 @@ export default createUnplugin(() => {
         return id;
       }
     },
-    transform(src: string, id: string) {
+    async transform(src: string, id: string) {
       if (id.endsWith('.mtl')) {
         const contents = String.raw`${src}`;
-        return {
-          code: getCode(contents),
-          map: null,
-        };
+        const code = await getCode(contents, id);
+        if (code) {
+          return {
+            code: code,
+            map: null,
+          };
+        }
       }
     },
   };
 });
 
-function getCode(contents: string) {
+async function getCode(contents: string, id: string) {
   const matches = contents.match(resourceRegex);
 
   /* if no external resources, return original raw contents and set extRef to false */
@@ -36,12 +41,14 @@ function getCode(contents: string) {
     return `
     export const mtl = \`${contents}\`
     export const extRef = false;
+    export const extRefHelpers = [];
   `;
   }
 
+  const idURL = parseURL(id).pathname;
   /* define var holding list of import statements for external resources */
   const imports: string[] = [];
-  //const extRefData: Record<string, ExtRefData> = {};
+  const extRefData: string[] = [];
 
   /* remove duplicates from list of matches */
   const uniqueMatches = matches.filter(
@@ -62,30 +69,24 @@ function getCode(contents: string) {
       '${' + 'asset' + i + '}'
     );
     imports.push(`import asset${i} from './${trimmedMatches[i]}';`);
-    /*
-      const imgPath = parseURL(trimmedMatches[i]).pathname;
-      const image = await loadImage(imgPath);
-      const { width, height } = await image.metadata();
-      if (!width)
-        throw new Error(
-          `Error: sharp could not determine width of : ./${trimmedMatches[i]} `
-        );
-
-      if (!height)
-        throw new Error(
-          `Error: sharp could not determine height of : ./${trimmedMatches[i]} `
-        );
-      extRefData[`asset${i}`] = {
-        src: `asset${i}`,
-        width,
-        height,
-      };
-    */
+    const image = await loadImage(
+      path.dirname(idURL) + '/' + trimmedMatches[i]
+    );
+    const metadata = await image.metadata();
+    if (metadata) {
+      const imgData = `{
+        src: asset${i},
+        width: ${metadata.width},
+        height: ${metadata.height},
+      }`;
+      extRefData.push(imgData);
+    }
   }
 
   return `
     ${imports.join('\n')}
     export const mtl = ${replacedContents};
     export const extRef = true;
+    export const extRefHelpers = ${extRefData};
   `;
 }

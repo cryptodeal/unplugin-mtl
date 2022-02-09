@@ -3,11 +3,12 @@
 	import * as SC from 'svelte-cubed';
 	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-	import { mtl, extRef } from '$lib/models/demo1/Lowpoly_tree_sample.mtl';
+	import { mtl, extRef, extRefHelpers } from '$lib/models/demo1/Lowpoly_tree_sample.mtl';
 	import obj from '$lib/models/demo1/Lowpoly_tree_sample.obj';
 	import { onMount } from 'svelte';
 	let object;
 	$: console.log(`.mtl file helper, uses external resources: ${extRef}`);
+	$: console.log(extRefHelpers);
 	onMount(() => {
 		const materials = new MTLLoader().parse(mtl, '');
 		materials.preload();

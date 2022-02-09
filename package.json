@@ -84,14 +84,14 @@
   },
   "dependencies": {
     "@rollup/pluginutils": "^4.1.2",
-    "sharp": "^0.30.0",
+    "sharp": "^0.30.1",
     "unplugin": "^0.2.21"
   },
   "devDependencies": {
     "@types/node": "^16.11.22",
     "@types/sharp": "^0.29.5",
-    "@typescript-eslint/eslint-plugin": "^5.10.2",
-    "@typescript-eslint/parser": "^5.10.2",
+    "@typescript-eslint/eslint-plugin": "^5.11.0",
+    "@typescript-eslint/parser": "^5.11.0",
     "bumpp": "^6.1.0",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
@@ -101,10 +101,10 @@
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
-    "rollup": "^2.67.0",
+    "rollup": "^2.67.1",
     "tsup": "^4.14.0",
     "typescript": "^4.5.5",
-    "vite": "^2.7.13",
+    "vite": "^2.8.0",
     "webpack": "^5.68.0"
   }
 }

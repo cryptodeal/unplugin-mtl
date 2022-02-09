@@ -3,11 +3,13 @@
 	import * as SC from 'svelte-cubed';
 	import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 	import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-	import { mtl, extRef } from '$lib/models/demo2/Car.mtl';
+	import { mtl, extRef, extRefHelpers } from '$lib/models/demo2/Car.mtl';
 	import obj from '$lib/models/demo2/Car.obj';
 	import { onMount } from 'svelte';
 	let object;
 	$: console.log(`.mtl file helper, uses external resources: ${extRef}`);
+	$: console.log(extRefHelpers);
+
 	onMount(() => {
 		const materials = new MTLLoader().parse(mtl, '');
 		materials.preload();

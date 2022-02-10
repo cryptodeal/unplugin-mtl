@@ -7,6 +7,6 @@ interface ExtRefData {
 declare module '*.mtl' {
   const mtl: string;
   const extRef: boolean;
-  const extRefHelpers: Record<string, ExtRefData>;
+  const extRefHelpers: ExtRefData[];
   export { mtl, extRef, extRefHelpers };
 }

@@ -12,9 +12,10 @@ import { parseMaterial } from './parseMaterial';
 const ctx: Worker = self as any;
 
 // We send a message back to the main thread
-ctx.addEventListener('message', (event: MTLWorkerListenerEvent) => {
-	const mtlLoader = new MTLLoader();
-	const { mtl, path, obj } = event.data;
+ctx.addEventListener('message', async (event: MTLWorkerListenerEvent) => {
+	const { mtl, path, obj, extRefHelpers } = event.data;
+	const mtlLoader = new MTLLoader(extRefHelpers);
+
 	const matches = mtl.match(/ (.*\.(jpeg|jpg|mpc|mps|mpb|cxc|cxs|cxb|png|tga))/g);
 	if (!matches) {
 		const materials = mtlLoader.parse(mtl, path) as unknown as mtlLoaderType.MaterialCreator;

@@ -87,6 +87,6 @@ async function getCode(contents: string, id: string) {
     ${imports.join('\n')}
     export const mtl = ${replacedContents};
     export const extRef = true;
-    export const extRefHelpers = ${extRefData};
+    export const extRefHelpers = [${extRefData}];
   `;
 }

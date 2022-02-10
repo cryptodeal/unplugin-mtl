@@ -9,6 +9,9 @@
 			<li class:active={$page.url.pathname === '/demo2'}>
 				<a sveltekit:prefetch href="/demo2">Demo 2</a>
 			</li>
+			<li class:active={$page.url.pathname === '/demo3'}>
+				<a sveltekit:prefetch href="/demo3">Demo 3 (Web Worker)</a>
+			</li>
 		</ul>
 	</nav>
 </header>

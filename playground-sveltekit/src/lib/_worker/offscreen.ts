@@ -1,4 +1,4 @@
-import init from 'three/examples/jsm/offscreen/scene.js';
+import init from './offscreenDemo';
 
 const ctx: Worker = self as any;
 

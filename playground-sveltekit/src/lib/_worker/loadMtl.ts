@@ -9,10 +9,9 @@ import {
 	RepeatWrapping,
 	Vector2,
 	sRGBEncoding,
+	TextureLoader,
 	DataTexture
 } from 'three';
-import sizeOf from 'image-size';
-import { Buffer } from 'buffer';
 import type {
 	LoadingManager,
 	Material,
@@ -79,11 +78,12 @@ export interface TexParams {
 
 class MTLLoader extends Loader {
 	public materialOptions: MaterialCreatorOptions = {};
+	public extRefHelpers: ExtRefData[];
 
-	constructor(manager?: LoadingManager) {
+	constructor(extRefHelpers?: ExtRefData[], manager?: LoadingManager) {
 		super(manager);
+		this.extRefHelpers = extRefHelpers || [];
 	}
-
 	/**
 	 * Loads and parses a MTL asset from a URL.
 	 *
@@ -177,7 +177,11 @@ class MTLLoader extends Loader {
 			}
 		}
 
-		const materialCreator = new MaterialCreator(this.resourcePath || path, this.materialOptions);
+		const materialCreator = new MaterialCreator(
+			this.resourcePath || path,
+			this.materialOptions,
+			this.extRefHelpers
+		);
 		materialCreator.setCrossOrigin(this.crossOrigin);
 		materialCreator.setManager(this.manager);
 		materialCreator.setMaterials(materialsInfo);
@@ -196,10 +200,12 @@ export class MaterialCreator {
 	public side: Side;
 	public wrap: Wrapping;
 	public manager?: LoadingManager;
+	public extRefHelpers: ExtRefData[];
 
-	constructor(baseUrl = '', options?: MaterialCreatorOptions) {
+	constructor(baseUrl = '', options?: MaterialCreatorOptions, extRefHelpers?: ExtRefData[]) {
 		this.baseUrl = baseUrl;
 		this.options = options;
+		this.extRefHelpers = extRefHelpers || [];
 
 		this.side = this.options?.side !== undefined ? this.options.side : FrontSide;
 		this.wrap = this.options?.wrap !== undefined ? this.options.wrap : RepeatWrapping;
@@ -496,18 +502,26 @@ export class MaterialCreator {
 	) {
 		const manager = this.manager !== undefined ? this.manager : DefaultLoadingManager;
 		const loader = new FileLoader(manager);
-		loader.setResponseType('blob');
+		loader.setResponseType('arraybuffer');
 		if (loader.setCrossOrigin) loader.setCrossOrigin(this.crossOrigin);
+		const imgData = this.extRefHelpers.find(({ src }) => src === url);
 
-		const image: Blob = loader.load(url, onLoad, onProgress, onError) as Blob;
-		console.log(image);
-		return image.arrayBuffer().then((buffer) => {
-			//const texture = new DataTexture(buffer, image.width)
-		});
-		//const texture = new DataTexture(image.arrayBuffer(), image)
-
-		if (mapping !== undefined) texture.mapping = mapping;
-
+		const texture: DataTexture = loader.load(
+			url,
+			(resource: string | ArrayBuffer) => {
+				if (typeof resource === 'string')
+					throw new Error(`Error: expected typeof ArrayBuffer, received string`);
+				const { width } = imgData;
+				console.log(resource.byteLength);
+				const arrayData = new Uint8ClampedArray(resource);
+				const image = new ImageData(arrayData, width);
+				texture.image = image;
+				if (mapping !== undefined) texture.mapping = mapping;
+				return texture;
+			},
+			onProgress,
+			onError
+		);
 		return texture;
 	}
 }

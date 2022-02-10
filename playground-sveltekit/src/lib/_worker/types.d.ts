@@ -29,6 +29,7 @@ export interface MTLWorkerListenerEventData {
 	mtl: string;
 	path: string;
 	obj: string;
+	extRefHelpers?: ExtRefData[];
 }
 
 export interface MTLWorkerListenerEvent extends MessageEvent {

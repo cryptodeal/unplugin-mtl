@@ -78,12 +78,12 @@ importers:
       three: ^0.137.5
       tslib: ^2.3.1
       typescript: ^4.5.5
-      unplugin-mtl: latest
+      unplugin-mtl: workspace:*
       unplugin-obj: ^0.1.2
     devDependencies:
       '@fontsource/fira-mono': 4.5.2
       '@sveltejs/adapter-vercel': 1.0.0-next.41
-      '@sveltejs/kit': 1.0.0-next.262_svelte@3.46.4
+      '@sveltejs/kit': 1.0.0-next.263_svelte@3.46.4
       '@types/offscreencanvas': 2019.6.4
       '@types/three': 0.137.0
       buffer: 6.0.3
@@ -214,8 +214,8 @@ packages:
       esbuild: 0.14.21
     dev: true
 
-  /@sveltejs/kit/1.0.0-next.262_svelte@3.46.4:
-    resolution: {integrity: sha512-3ZFeQi4V5GYnTsfHjfnxBoMqPW8hcKNFZJXWs8Lsmnh2h/j8hAlaOBYcHc2a8CH4BwjnZ+f9suBsDkrpUSNoaw==}
+  /@sveltejs/kit/1.0.0-next.263_svelte@3.46.4:
+    resolution: {integrity: sha512-LzpJzDW1fhSC5EVdTXV3pn2HC+vNJRPLxWBX/uKNgxu4HHogxjZKPkBFp6ZDc6gENStG0sQFmoXD4fYYYWZE0A==}
     engines: {node: '>=14.13'}
     hasBin: true
     peerDependencies:

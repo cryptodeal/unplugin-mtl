@@ -3,6 +3,7 @@
 	import * as SC from 'svelte-cubed';
 	import Worker from '$lib/_worker/offscreen?worker';
 	import { onMount } from 'svelte';
+	import { getCapabilities } from 'svelte-cubed';
 	import type { OffscreenCanvas } from 'three';
 	let width: number;
 	let height: number;
@@ -10,6 +11,8 @@
 	let canvas: SC.Canvas;
 
 	onMount(() => {
+		const capabilities = getCapabilities();
+		console.log(capabilities);
 		const offscreen: OffscreenCanvas = canvas.transferControlToOffscreen();
 		const worker = new Worker();
 		worker.postMessage({
